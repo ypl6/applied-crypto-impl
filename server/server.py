@@ -3,7 +3,9 @@ from utils import *
 
 app = Flask(__name__)
 	
-SHORT_MESSAGE = 25
+# MESSAGE = "Aphrodite, subtle of soul and deathless.".encode("utf-8")
+# MESSAGE_INT = convert_int(MESSAGE)
+SHORT_MESSAGE = 25 # $m$ should be less than all $n_i$
 
 @app.route("/message/", methods=["GET"])
 def get_list():
@@ -27,7 +29,3 @@ def get_message(name: str):
 		"ciphertext": ciphertext,
 	}
 	return res
-	
-# MESSAGE = "Aphrodite, subtle of soul and deathless.".encode("utf-8")
-# MESSAGE_INT = convert_int(MESSAGE)
-# MESSAGE_STR = MESSAGE.decode('utf-8')

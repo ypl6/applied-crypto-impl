@@ -21,16 +21,6 @@ def gen_keys_small_n():
 		with open(f"keys_small_n/{RECIPIENTS[i]}.pub", "wb") as pub_key_file:
 			pub_key_file.write(public_key.export_key("PEM"))
 
-# def gen_keys():
-# 	"""
-# 	Generate (weak) RSA public keys using $e = 3$ for each recipient.
-# 	"""
-# 	for recipient in RECIPIENTS:
-# 		key = RSA.generate(1024, e = 3)
-# 		public_key = key.public_key()
-# 		with open(f"keys/{recipient}.pub", "wb") as pub_key_file:
-# 			pub_key_file.write(public_key.export_key("PEM"))
-		
 def get_pub_key(name: str):
 	"""
 	Read the stored public key.
