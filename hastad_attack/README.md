@@ -2,6 +2,10 @@
 
 A simplified setup for testing Hastad's Broadcast Attack at the simplest form (i.e. $e = 3$ and $m$ is not padded).
 
+## Environment
+
+- Run `$ pip install -r requirements.txt`
+
 ## Server
 
 - `$ flask run` to start the server at port 5000

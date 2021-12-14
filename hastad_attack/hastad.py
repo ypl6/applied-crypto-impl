@@ -47,8 +47,3 @@ def hastad_unpadded():
 unpadded = int(hastad_unpadded())
 print(unpadded)
 print(binascii.unhexlify(hex(unpadded)[2:].strip("L")))
-
-# %%
-# padded = int(hastad_padded())
-# print(padded)
-# print(binascii.unhexlify(hex(padded)[2:].strip("L")))
