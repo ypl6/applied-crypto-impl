@@ -27,10 +27,11 @@ def get_res():
 	return samples
 
 # %%
-def find_m():
+def hastad_unpadded():
 	"""
 	Given $e = 3$ samples, construct lists $c$, $n$ where $c_i \equiv m^{e} (mod\ n_i)$. Then, use CRT to find $m$.
 	"""
+	e = 3
 	n = []
 	c = []
 	samples = get_res()
@@ -38,11 +39,16 @@ def find_m():
 		n.append(sample.n)
 		c.append(sample.ciphertext)
 	result, mod = crt(n, c)  # result refers to $m^3$
-	value, valid  = iroot(result, 3)
+	value, valid  = iroot(result, e)
 	if valid:
 		return value
 
 # %%
-message = int(find_m())
-print(int(message))
-print(binascii.unhexlify(hex(message)[2:].strip("L")))
+unpadded = int(hastad_unpadded())
+print(unpadded)
+print(binascii.unhexlify(hex(unpadded)[2:].strip("L")))
+
+# %%
+# padded = int(hastad_padded())
+# print(padded)
+# print(binascii.unhexlify(hex(padded)[2:].strip("L")))

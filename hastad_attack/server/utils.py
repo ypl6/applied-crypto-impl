@@ -1,13 +1,10 @@
 from Crypto.PublicKey import RSA
-import math
-from mpmath import mp
-from gmpy2 import mpz
 from dataclasses import dataclass
-
 
 def gen_keys():
 	"""
 	Generate (weak) RSA public keys using $e = 3$ for each recipient.
+	This is not called when handling requests.
 	"""
 	for i in range(len(RECIPIENTS)):
 		key = RSA.generate(1024, e = 3)
@@ -40,8 +37,9 @@ def convert_int(message: bytes):
 class Message:
 	raw_int: int
 
+# aphrodite = "Aphrodite, subtle of soul and deathless. Daughter of God, weaver of wiles, I pray thee."
+# aphrodite_int = convert_int(aphrodite.encode("utf-8"))
 APHRODITE = Message(raw_int=84037726152314829912290806586038319621521592711564798488513299671306110446562137161591546039327051431408754387718625452506855330110874560579056026965209996080419808088002401111444342694275165783209474110350638)
-# print(convert_int("Aphrodite, subtle of soul and deathless. Daughter of God, weaver of wiles, I pray thee.".encode("utf-8")))
 
 RECIPIENTS = ["alice", "carol", "danny"]
 
