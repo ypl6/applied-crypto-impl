@@ -3,10 +3,6 @@ from utils import *
 
 app = Flask(__name__)
 	
-# MESSAGE = "Aphrodite, subtle of soul and deathless.".encode("utf-8")
-# MESSAGE_INT = convert_int(MESSAGE)
-SHORT_MESSAGE = 25 # $m$ should be less than all $n_i$
-
 @app.route("/message/", methods=["GET"])
 def get_list():
 	res = {
@@ -20,8 +16,7 @@ def get_message(name: str):
 		pub_key = get_pub_key(name)
 	except FileNotFoundError:
 		return {"error": "recipient's public key does not exist"}
-		
-	ciphertext = encrypt(SHORT_MESSAGE, pub_key)
+	ciphertext = textbook_encrypt(APHRODITE.raw_int, pub_key)
 	res = {
 		"recipient": name,
 		"n": pub_key.n,
