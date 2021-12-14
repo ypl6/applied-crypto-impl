@@ -12,7 +12,7 @@ class TextSample:
 	ciphertext: int
 
 # %%
-def get_res():
+def get_res(ext=""):
 	"""
 	Retrieve data from server.
 	"""
@@ -20,7 +20,7 @@ def get_res():
 	base_url = "http://127.0.0.1:5000/message/"
 	rep_list = json.load(urlopen(base_url))["recipients"]
 	for r in rep_list:
-		url = urlopen(base_url + r)
+		url = urlopen(base_url + r + ext)
 		data = json.load(url)
 		sample = TextSample(n=data["n"], ciphertext=data["ciphertext"])
 		samples.append(sample)
@@ -29,7 +29,8 @@ def get_res():
 # %%
 def hastad_unpadded():
 	"""
-	Given $e = 3$ samples, construct lists $c$, $n$ where $c_i \equiv m^{e} (mod\ n_i)$. Then, use CRT to find $m$.
+	Given $e = 3$ samples, construct lists $c$, $n$ where $c_i \equiv m^{e} (mod\ n_i)$.
+	Then, use CRT to find $m$.
 	"""
 	e = 3
 	n = []
@@ -44,11 +45,29 @@ def hastad_unpadded():
 		return value
 
 # %%
-unpadded = int(hastad_unpadded())
-print(unpadded)
-print(binascii.unhexlify(hex(unpadded)[2:].strip("L")))
+# unpadded = int(hastad_unpadded())
+# print(unpadded)
+# print(binascii.unhexlify(hex(unpadded)[2:].strip("L")))
 
 # %%
-# padded = int(hastad_padded())
-# print(padded)
-# print(binascii.unhexlify(hex(padded)[2:].strip("L")))
+def hastad_padded():
+	"""
+	Given $e = 3$ samples, construct lists $c$, $n$ where $c_i \equiv m^{e} (mod\ n_i)$.
+	Then, use CRT to find $m$.
+	"""
+	e = 3
+	n = []
+	c = []
+	samples = get_res("/pad")
+	for sample in samples:
+		n.append(sample.n)
+		c.append(sample.ciphertext)
+	result, mod = crt(n, c)  # result refers to $m^3$
+	value, valid  = iroot(result, e)
+	if valid:
+		return value
+
+# %%
+padded = int(hastad_padded())
+print(padded)
+print(binascii.unhexlify(hex(padded)[2:].strip("L")))

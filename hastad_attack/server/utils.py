@@ -1,5 +1,6 @@
 from Crypto.PublicKey import RSA
 from dataclasses import dataclass
+import random
 
 def gen_keys():
 	"""
@@ -25,6 +26,15 @@ def textbook_encrypt(message: int, pub_key: RSA.RsaKey):
 	Textbook RSA encryption without padding.
 	"""
 	c = pow(message, pub_key.e, pub_key.n)
+	return c
+	
+def simple_pad_encrypt(message: int, pub_key: RSA.RsaKey):
+	"""
+	Textbook RSA encryption with weak padding.
+	"""
+	something_to_add = random.randint(1, 2048)
+	print("something_to_add:", something_to_add)
+	c = pow(message + something_to_add, pub_key.e, pub_key.n)
 	return c
 
 def convert_int(message: bytes):
